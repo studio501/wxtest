@@ -1,0 +1,58 @@
+extends layout
+
+block content
+	h1= title
+	p Welcome to #{title}
+	h1#btn_one 一个按钮
+
+	script(src='http://res.wx.qq.com/open/js/jweixin-1.6.0.js')
+	script(src='https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js')
+	script.
+		var signPackage = !{JSON.stringify(signPackage)};
+		console.log('signPackage,,,jade',signPackage)
+		wx.config({
+			debug: true,
+			appId: signPackage.appId,
+			timestamp: signPackage.timestamp,
+			nonceStr: signPackage.nonceStr,
+			signature: signPackage.signature,
+			jsApiList: [
+				'updateAppMessageShareData',
+				'updateTimelineShareData',
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage',
+				'onMenuShareQQ',
+				'onMenuShareWeibo',
+				'onMenuShareQZone',
+				'startRecord',
+				'stopRecord',
+				'translateVoice',
+				'getNetworkType'
+			]
+		});
+		wx.ready(function () {
+			// 在这里调用 API
+			console.log('wx ready');
+
+			$('#btn_one').tap(function(){
+				wx.getNetworkType({
+				  success: function (res) {
+				    var networkType = res.networkType;
+				  }
+				});
+				/*wx.updateAppMessageShareData({ 
+				    title: '123', // 分享标题
+				    desc: 'abcd', // 分享描述
+				    link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+				    imgUrl: '', // 分享图标
+				    success: function () {
+				      // 设置成功
+				    }
+				})*/
+			});
+		});
+
+		wx.error(function(res){
+			console.log('wx error,,,',res)
+		});
+

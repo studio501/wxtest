@@ -2,13 +2,28 @@ var express = require('express');
 var router = express.Router();
 const crypto = require('crypto');
 
-var eval_expression = require('./eval_expression.js')
+const jssdk = require('../libs/jssdk');
+
+const eval_expression = require('./eval_expression')
 
 var cclog = console.log;
 
 /* GET home page. */
 router.get('/wechat/hello', function(req, res, next) {
-  res.render('index', { title: 'welcom to tangwen website' });
+	// cclog('req.url is',req.url)
+	// '47.105.182.64/wechat/hello'
+	jssdk.getSignPackage('http://47.105.182.64/wechat/hello',function (err,signPackage) {
+		if(err){
+			return next(err);
+		}
+		// Jade Template
+		res.render('index',{
+			title: 'Hello Wechate from tangwen Express',
+			signPackage: signPackage,
+			pretty: true
+		})
+	})
+ 	// res.render('index', { title: 'welcom to tangwen website' });
 });
 
 // handle route

@@ -25,54 +25,53 @@ class Stack{
 		return this.length() == 0;
 	}
 }
+function operation(element1,element2,operator){
+	var temp = 0;
+	var element1 = Number(element1);
+	cclog("element1",element1,"element2",element2);
+	var element2 = Number(element2);
+	switch(operator){
+			case "*":
+				temp = element2 * element1;
+				break;
+			case "/":
+				temp = element2 / element1;
+				break;
+			case "+":
+				temp = element2 + element1;
+				break;
+			case "-":
+				temp = element2 - element1;
+				break;
+			default:
+				break;	
+		}
+		return temp;
+}
 function expression_Evaluation(data){
-	var warehouse = new Stack();
+	var warehouseStack = new Stack();//元素栈
+	var operatorStack = new Stack();//运算符栈
+	var operator = "";
+	var arry = [];
 	var temp1 = 0;
 	var temp2 = 0;
 	var temp = 0;
+	var temporary = 0;
 	for(var i=0;i<data.length;i++){
-		if(data[i]=="*"){
-			temp1 = 0;
-			temp2 = 0;
-			temp1 = warehouse.peek();
-			warehouse.pop();
-			temp2 = warehouse.peek();
-			temp = parseInt(temp2)*parseInt(temp1);
-			warehouse.pop();
-			warehouse.push(temp);
-		}else if(data[i]=="/"){
-			temp1 = 0;
-			temp2 = 0;
-			temp1 = warehouse.peek();
-			warehouse.pop();
-			temp2 = warehouse.peek();
-			temp = parseInt(temp2)/parseInt(temp1);
-			warehouse.pop();
-			warehouse.push(temp);
-		}else if(data[i]=="+"){
-			temp1 = 0;
-			temp2 = 0;
-			temp1 = warehouse.peek();
-			warehouse.pop();
-			temp2 = warehouse.peek();
-			temp = parseInt(temp2)+parseInt(temp1);
-			warehouse.pop();
-			warehouse.push(temp);
-		}else if(data[i]=="-"){
-			temp1 = 0;
-			temp2 = 0;
-			temp1 = warehouse.peek();
-			warehouse.pop();
-			temp2 = warehouse.peek();
-			temp = parseInt(temp2)-parseInt(temp1);
-			warehouse.pop();
-			warehouse.push(temp);
+		if(whetherIsoperand(data[i]) > -1){
+			operator = data[i];
+			temp1 = warehouseStack.peek();
+			warehouseStack.pop();
+			temp2 = warehouseStack.peek();
+			warehouseStack.pop();
+			//cclog("temp2",temp2);
+			temp = operation(temp1,temp2,operator);
+			warehouseStack.push(temp);
 		}else{
-			var j = data[i];
-			warehouse.push(j);
+			warehouseStack.push(data[i]);
 		}
 	}
-	return warehouse.peek();
+	return warehouseStack.peek();
 }
 function whetherIsoperand(element){
 	var data = ["(",")","+","-","*","/"];
@@ -82,69 +81,59 @@ function whetherIsoperand(element){
 }
 //过滤空格
 function filtration(expression){
-	var temp = "";
+	var temp = [];
 	for(var i = 0; i<expression.length;i++){
 		if(expression[i]!=" "){
-			temp += expression[i];
+			temp.push(expression[i]);
 		}
 	}
 	return temp;
 }
 //将中缀表达式转换为后缀表达式
 function formula(expression){
-	expression = filtration(expression);
-	var temp = "";
+	var in_str = [];
+		in_str = parse_expression(expression);
+		in_str = filtration(in_str);
+	var temp = [];
 	var element = new Stack();//元素栈
 	var operand = new Stack();//运算符栈
 	var transition = new Stack();//转换
-	for(var i=0;i<expression.length;i++){
-		if( whetherIsoperand(expression[i]) > -1){
-			operand.push(expression[i]);
-			//cclog("运算符",operand.peek());
-		}else{
-			element.push(expression[i]);
-			//cclog("元素",element.peek());
-		}
-	}
-	//"2*(9+6/3-5)+4"  "4/2+(2+3)-4" 2+(4*2+3)+4 
-	for(var j = 0; j < expression.length; j++){
-			switch (expression[j]){
+	for(var j = 0; j < in_str.length; j++){
+			switch (in_str[j]){
 				case "*"://乘法什么都不做直接入栈
-					transition.push(expression[j]);
+					transition.push(in_str[j]);
 					break;
 				case "/"://除法什么都不做直接入栈
-					transition.push(expression[j]);
+					transition.push(in_str[j]);
 					//cclog(transition.length());
 					break;
 				case "("://左括号什么都不做直接入栈
-					transition.push(expression[j]);
+					transition.push(in_str[j]);
 					break;
 				case "+"://加法判断前面运算符的优先级在做什么
 					if(transition.length() == 0){
-						transition.push(expression[j]);
+						transition.push(in_str[j]);
 					}
 					else if(transition.peek()=="*"||
 						transition.peek()=="/"||
 						transition.peek()=="-"||
 						transition.peek()=="+"){
 						var temp1 = transition.length();
-						for(var q = 0; q < temp1; q++){
+						for(var q = 0; q <= temp1; q++){
 							if(transition.peek()=='('||transition.length()==0){
-								transition.push(expression[j]);
+								transition.push(in_str[j]);
 									break;
 							}else{
-								temp += String(transition.pop());
-								//"2+(4*2+3)+4"
-								//242*    +(+
+								temp.push(transition.pop());
 							}
 						}	
 					}else{
-						transition.push(expression[j]);
+						transition.push(in_str[j]);
 					}
 					break;
 				case "-"://减法判断前面运算符的优先级在做什么
 					if(transition.length() == 0){
-						transition.push(expression[j]);
+						transition.push(in_str[j]);
 					}
 					else if(transition.peek()=="*"||
 						transition.peek()=="/"||
@@ -153,14 +142,14 @@ function formula(expression){
 						var temp2 = transition.length();
 						for(var q1 = 0; q1 <= temp2; q1++){
 							if(transition.peek()=='('||transition.length()==0){
-								transition.push(expression[j]);
+								transition.push(in_str[j]);
 								break;
 							}else {
-								temp += String(transition.pop());
+								temp.push(transition.pop());
 							}
 						}	
 					}else{
-							transition.push(expression[j]);
+							transition.push(in_str[j]);
 						}
 						break;
 				case ")"://遇到右括号就把栈里面的运算符pop到左括号
@@ -168,29 +157,90 @@ function formula(expression){
 					for(var q2 = 0; q2 < temp3; q2++){
 						if(transition.peek() == "("){
 							transition.pop();
-							//break;
+							break;
 						}
 						else{
-							temp += String(transition.pop());
+							temp.push(transition.pop());
 						}
 					}					
 					break;
 				default:
-						temp +=String(expression[j]);
-						cclog(temp);
+						temp.push(in_str[j]);
 					break;
 			}				
 	}
-	if(transition.length()>0){
-		temp += String(transition.pop());
-	}else{
-		return;
+		
+	while(transition.length()>0){
+		temp.push(transition.pop());
 	}
-
-	//"242*3++4+"
-	//
 	return expression_Evaluation(temp);
-	//cclog(temp);
+}
+function parse_expression(in_str) {
+	var res = [];
+	var temp = '';
+  	for(let i=0;i<in_str.length;i++){
+  		//不是数字
+  			switch(in_str[i]){
+  				case ".":
+  					temp+= in_str[i];
+  					break;
+  				case "(":
+  					if(temp!=''){
+  				 		res.push(temp);
+  				 		temp = '';
+  				 	}
+  					res.push(in_str[i]);
+  					break;
+  				case ")":
+  					if(temp!=''){
+  				 		res.push(temp);
+  				 		temp = '';
+  				 	}
+  					res.push(in_str[i]);
+  					break;
+  				case "+":
+  					if(temp!=''){
+  				 		res.push(temp);
+  				 		temp = '';
+  				 	}
+  					res.push(in_str[i]);
+  					break;
+  				case "-":
+  					if(temp!=''){
+  				 		res.push(temp);
+  				 		temp = '';
+  				 	}
+  				 	if(res.length==0||res.length-1=='('){
+  				 		temp+=in_str[i];
+  				 		break;
+  				 	}else{
+  						res.push(in_str[i]);
+  				}
+  					break;
+  				case "*":
+  					if(temp!=''){
+  				 		res.push(temp);
+  				 		temp = '';
+  				 	}
+  					res.push(in_str[i]);
+  					break;
+  				case "/":
+  					if(temp!=''){
+  				 		res.push(temp);
+  				 		temp = '';
+  				 	}
+  					res.push(in_str[i]);
+  					break;
+  				default:
+		  			temp += in_str[i];
+		  		 	if(i == in_str.length -1){
+		  		 		res.push(temp);
+		  		 	}
+  					break;
+  			}
+  	}
+  	cclog("res=",res);
+  	return res;
 }
 eval_expression.formula = formula;
 module.exports = eval_expression;
