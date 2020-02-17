@@ -68,7 +68,7 @@ const handleWechatRequest = function (req,res,next) {
 			const content = req.body.xml.content[0].toString();
 
 			var rest_str = content
-			if (content.indexOf('+') > 0 || content.indexOf('-') > 0 || content.indexOf('*') > 0 || content.indexOf('/') > 0){
+			if (content.indexOf('+') > -1 || content.indexOf('-') > -1 || content.indexOf('*') > -1 || content.indexOf('/') > -1){
 				rest_str = eval_expression.formula(content);
 			}
 			
