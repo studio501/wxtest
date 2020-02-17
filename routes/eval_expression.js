@@ -242,6 +242,5 @@ function parse_expression(in_str) {
   	cclog("res=",res);
   	return res;
 }
-// 注释
 eval_expression.formula = formula;
 module.exports = eval_expression;
