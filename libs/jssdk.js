@@ -2,7 +2,7 @@
 * @Author: tangwen
 * @Date:   2020-02-15 22:50:25
 * @Last Modified by:   tangwen
-* @Last Modified time: 2020-02-17 15:36:53
+* @Last Modified time: 2020-02-18 13:03:44
 */
 
 
@@ -156,6 +156,9 @@ JSSDK.prototype = {
 	}
 };
 
+// tangwen
 const jssdk = new JSSDK('wx50d507b20f69d8dc','9b0213a84d14c0d00bfcc3bb385c5ec8');
+// redwar
+// const jssdk = new JSSDK('wx4b871d03442ff7d4','17aede67e3a9f164717760bcefa77924');
 
 module.exports = jssdk;
