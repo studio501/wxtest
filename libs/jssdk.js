@@ -2,7 +2,7 @@
 * @Author: tangwen
 * @Date:   2020-02-15 22:50:25
 * @Last Modified by:   tangwen
-* @Last Modified time: 2020-02-18 13:03:44
+* @Last Modified time: 2020-02-20 14:42:44
 */
 
 
@@ -94,15 +94,20 @@ JSSDK.prototype = {
 		const time = this.timeNow();
 		const self = this;
 
+		cclog("getAccessToken here,,,,");
+
 		if(data.expireTime < time){
+			cclog("gen new one");
+			cclog('this.appId',this.appId)
+			cclog('this.appSecrete',this.appSecrete)
 			const url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${this.appId}&secret=${this.appSecrete}`
 			request.get(url,function (err,res,body) {
 				if(err){
-					debug('getAccessToken.request.error',err,url);
+					cclog('getAccessToken.request.error',err,url);
 					return done(err,null);
 				}
 
-				debug('getAccessToken.request.body',body);
+				cclog('getAccessToken.request.body',body);
 
 				try{
 					const data = JSON.parse(body);
@@ -113,11 +118,12 @@ JSSDK.prototype = {
 					done(null,data.access_token);
 				}
 				catch(e){
-					debug('getAccessToken.JSON.parse',e);
+					cclog('getAccessToken.JSON.parse',e);
 					done(e,'invalid token')
 				}
 			});
 		}else{
+			cclog("use old one");
 			done(null,data.access_token)
 		}
 	},
@@ -153,12 +159,17 @@ JSSDK.prototype = {
 
 	writeCachFile: function (filename, data) {
 		return fs.writeFileSync(filename,JSON.stringify(data));
+	},
+
+	test: function () {
+		cclog('test here,,,')
 	}
 };
 
 // tangwen
-const jssdk = new JSSDK('wx50d507b20f69d8dc','9b0213a84d14c0d00bfcc3bb385c5ec8');
+// const jssdk = new JSSDK('wx50d507b20f69d8dc','9b0213a84d14c0d00bfcc3bb385c5ec8');
 // redwar
 // const jssdk = new JSSDK('wx4b871d03442ff7d4','17aede67e3a9f164717760bcefa77924');
 
-module.exports = jssdk;
+// module.exports = jssdk;
+module.exports = JSSDK;

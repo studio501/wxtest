@@ -3,10 +3,12 @@ extends layout
 block content
 	h1= title
 	p Welcome to #{title}
-	h1#btn_one 一个按钮
+	h1#btn_one 购买
+	h2#btn_check 查询
+	h2#btn_cancel 取消
 
 	//- a.weui-btn.weui-btn_primary(href='javascript:;') 页面主操作
-	a.weui-btn.weui-btn_primary(href='http://47.105.182.64/wechat/clickBtn') 页面主操作
+	a.weui-btn.weui-btn_primary(href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50d507b20f69d8dc&redirect_uri=http://devrtommy.nat100.top/wechat/auth&response_type=code&scope=snsapi_base&state=123#wechat_redirect') 认证1
 
 	script(src='http://res.wx.qq.com/open/js/jweixin-1.6.0.js')
 	script(src='https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js')
@@ -28,7 +30,21 @@ block content
 			console.log('wx ready');
 
 			$('#btn_one').tap(function(){
-				var url = "http://47.105.182.64/wechat/readyPay"
+				var url = "http://devrtommy.nat100.top/wechat/readyPay"
+		        var request = new XMLHttpRequest();
+		        request.open("GET", url);
+		        request.send(null);
+			});
+
+			$('#btn_check').tap(function(){
+				var url = "http://devrtommy.nat100.top/wechat/checkPay"
+		        var request = new XMLHttpRequest();
+		        request.open("GET", url);
+		        request.send(null);
+			});
+
+			$('#btn_cancel').tap(function(){
+				var url = "http://devrtommy.nat100.top/wechat/cancelPay"
 		        var request = new XMLHttpRequest();
 		        request.open("GET", url);
 		        request.send(null);
