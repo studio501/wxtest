@@ -6,6 +6,7 @@ const AppConfig = require('../AppConfig');
 const JSSDK = require('../libs/jssdk');
 const authurl = require('../libs/authurl');
 const tenpay = require('../libs/node-tenpay/lib');
+const pay_util = require('../libs/node-tenpay/lib/util');
 
 const request = require('request');
 const xml2js = require('xml2js');
@@ -44,7 +45,7 @@ const getSignPackage = function (req, res, next) {
 			return next(err);
 		}
 
-		cclog('signPackage here,,,',signPackage)
+		// cclog('signPackage here,,,',signPackage)
 		req.signPackage = signPackage;
 		next();
 	})
@@ -65,8 +66,9 @@ router.get('/wechat/hello', getSignPackage, function(req, res, next) {
 // wx50d507b20f69d8dc tangwen
 // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4b871d03442ff7d4&redirect_uri=http://devrtommy.nat100.top/wechat/auth&response_type=code&scope=snsapi_base&state=123#wechat_redirect
 // https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx50d507b20f69d8dc&redirect_uri=http://47.105.182.64/wechat/auth&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect
-router.get('/wechat/auth', function(req, res, next) {
+router.get('/wechat/auth', getSignPackage, function(req, res, next) {
 	const code = req.query.code;
+	cclog("auth code is",code);
 	const get_token_url = `https://api.weixin.qq.com/sns/oauth2/access_token?appid=${app_config.appId}&secret=${app_config.appSecret}&code=${code}&grant_type=authorization_code`
 	request.get(get_token_url,function (err,res2,body) {
 		if (err){
@@ -78,22 +80,40 @@ router.get('/wechat/auth', function(req, res, next) {
 
 		// res.send('hello');
 		var openid = body.openid
-		temp_global_id = openid
-
-		jssdk.getSignPackage(`${base_url}${req.url}`,function (err,signPackage) {
-			if(err){
-				return next(err);
-			}
-
-			res.send(openid);
-			// signPackage.openid = openid
-			// Jade Template
+		// temp_global_id = openid
+		req.signPackage.openid = openid
+		res.render('index',{
+			title: openid,
+			signPackage: req.signPackage,
+			pretty: true
 		})
 	})
 });
 
-router.get('/wechat/notify', function(req, res, next) {
-	cclog('notify here',req.query);
+router.post('/wechat/notify', function(req, res, next) {
+	if(!req.body || !req.body.xml){
+		return res.send('error');
+	}
+
+	let xml_data = pay_util.flatXML(req.body.xml)
+	if (api._getSign(xml_data) !== xml_data.sign){
+		cclog('sign error,,,,')
+		return res.send('notify sign error');
+	}
+
+	if(xml_data.result_code !== 'SUCCESS'){
+		return res.send('notify'+xml_data.return_code)
+	}
+
+	//todo delete oreder
+	//
+	//
+	cclog("transaction_id is",xml_data.transaction_id)
+
+	res.send(`<xml>
+	  <return_code><![CDATA[SUCCESS]]></return_code>
+	  <return_msg><![CDATA[OK]]></return_msg>
+	</xml>`)
 });
 
 router.get('/wechat/refund', function(req, res, next) {
@@ -101,20 +121,22 @@ router.get('/wechat/refund', function(req, res, next) {
 });
 
 router.get('/wechat/readyPay', getSignPackage, function(req, res, next) {
-	cclog('readyPay here',req.body);
+	cclog('readyPay here',req.query);
+
 	// const api = new tenpay(pay_config,true);
 	// api.getSignkey();
+	let openid = req.query.openid
 
 	let response = api.getPayParams({
 		out_trade_no: 'redwar' + Math.round(Date.now() / 1000),
 		body: '商品1',
 		total_fee: 1,
-		openid: 'ozlLZjhHk9PV2mYFp5QIhWyd-2Pc',
+		// openid: 'ozlLZjhHk9PV2mYFp5QIhWyd-2Pc',
+		openid: openid || 'ozlLZjhHk9PV2mYFp5QIhWyd-2Pc',
     });
     let keys = ['appId', 'timeStamp', 'nonceStr', 'package', 'signType', 'paySign', 'timestamp'];
 
 	response.then(function (value) {
-		// value.appid = "wxf670dc053f6a9489"
 		cclog('readyPay value',value)
 		res.render('pay',{
 			title: 'RedWar Pay',
@@ -146,8 +168,9 @@ router.get('/wechat/checkPay',getSignPackage, function(req, res, next) {
 });
 
 router.get('/wechat/cancelPay', function(req, res, next) {
+	let cancel_id = req.query.order_id
 	let response = api.closeOrder({
-		out_trade_no: temp_order_id
+		out_trade_no: cancel_id || temp_order_id
     });
     response.then(function (value) {
     	cclog('cancelPay value',value)
@@ -174,7 +197,7 @@ const handleWechatRequest = function (req,res,next) {
   	}
   	if(req.method === 'POST'){
   		// cclog('handleWechatRequest post:', {body:req.body,query:req.query});
-  		// cclog('handleWechatRequest post body:',req.body.xml)
+  		// cclog('handleWechatRequest post body:',pay_util.flatXML(req.body.xml))
   	}
 
   	if(req.method === 'GET'){

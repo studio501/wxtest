@@ -48,3 +48,11 @@ exports.parseXML = (xml) => new Promise((resolve, reject) => {
   const opt = {trim: true, explicitArray: false, explicitRoot: false};
   xml2js.parseString(xml, opt, (err, res) => err ? reject(new Error('XMLDataError')) : resolve(res || {}));
 });
+
+exports.flatXML = (xmldata) => {
+  let res = {}
+  for (let key in xmldata){
+    res[key] = xmldata[key][0]
+  }
+  return res;
+}
