@@ -10,6 +10,14 @@ block content
 	//- a.weui-btn.weui-btn_primary(href='javascript:;') 页面主操作
 	a.weui-btn.weui-btn_primary(href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4b871d03442ff7d4&redirect_uri=http://devrtommy.nat100.top/wechat/auth&response_type=code&scope=snsapi_base&state=123#wechat_redirect') 认证1
 
+	img(src='http://devrtommy.nat100.top/images/goods/zuanshi.png', alt='', data-width='150', data-ratio='1')
+
+	.pagebg(style='background-image: url("/static/img/blank.gif");')
+	.pagemain
+	  a(href='cart', page='cart')
+	    img.weui-media-box__thumb(src='http://devrtommy.nat100.top/images/uis/tittle02_half.png', mode='scaleToFill', style='width:100%;height:61px;')
+
+
 	script(src='http://res.wx.qq.com/open/js/jweixin-1.6.0.js')
 	script(src='https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js')
 	script.

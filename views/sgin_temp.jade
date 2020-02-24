@@ -1,0 +1,723 @@
+html
+	head
+	body
+		#SignMain.main
+			// <div class="top">
+			img.banner(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/banner.png', alt='')
+			.bottomBox
+				ul.prizeList
+					//
+						<li>
+						<img src="https://hlsgqn.tytuyoo.com/3kingdoms/Icon/shangpin_1.png" alt="" class="prizeImg">
+						<p class="title">第一天</p>
+						<img class="geted" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/geted_617.png" alt="">
+						<p class="mask"></p>
+						</li>
+			// </div>
+			.changeServer
+				.selectBox(onclick='SignCon.showList()')
+					span 选择服务器
+					img.iconArr(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/icon_617.png', alt='')
+				ul.serverList
+					li#roleId 空城妙计
+					li
+						| 空城妙计 
+						img.iconArr(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/icon_617.png', alt='')
+			.userInfo
+				.leftBox
+					img.imgUrl(src='', alt='')
+					p
+						span.nickName 昵称：
+						span.uid ID:
+						span.level 角色等级:
+				button#resignBtn.resignBtn(onclick='SignCon.signFn(this,1)')
+					img(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/resignBtn.png', alt='')
+				button#rechargeBtn.rechargeBtn(onclick='SignCon.PayUI()')
+					img(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/rechargeBtn.png', alt='')
+		// 充值块
+		#RechargeMain.rechargeMain
+			.userBox
+				.changeServer
+					.selectBox(onclick='SignCon.showList()')
+						span 选择服务器
+						img.iconArr(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/icon_617.png', alt='')
+					ul.serverList
+						//
+							<li id="roleId">空城妙计<img class="iconArr" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/icon_617.png" alt=""></li>
+							<li>空城妙计</li>
+				.user
+					span.uid ID：1233
+					span.level 角色等级:LV56
+			.list
+			//
+				<div class="goodBox">
+				<h5 class="title">元宝店</h5>
+				<div class="swiper-container list list0">
+				<div class="swiper-wrapper">
+				<div class="swiper-slide goodItem">
+				<p class="iconLeft cornerMarker0">
+				<img class="imgIcon cornerMarker0" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/0.png" alt="">
+				<img class="imgIcon cornerMarker1" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/1.png" alt="">
+				<img class="imgIcon cornerMarker2" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/2.png" alt="">
+				<img class="imgIcon cornerMarker3" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/3.png" alt="">
+				</p>
+				<h5 class="name">特d权卡</h5>
+				<img class="des" des='23224' title='zhk' src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/jg.png" alt="">
+				<img class="goodsImg" src="https://hlsgqn.tytuyoo.com/3kingdoms/Icon/shangpin_1.png" alt="">
+				<p class="limitGoods active">限购9/10</p>
+				<button class="buttonGoods">购买 ¥5</button>
+				</div>
+				<div class="swiper-slide goodItem">Slide 2</div>
+				<div class="swiper-slide goodItem">Slide 5</div>
+				<div class="swiper-slide goodItem">Slide 5</div>
+				<div class="swiper-slide goodItem">Slide 5</div>
+				<div class="swiper-slide goodItem">Slide 6</div>
+				<div class="swiper-slide goodItem">Slide 6</div>
+				<div class="swiper-slide goodItem">Slide 6</div>
+				<div class="swiper-slide goodItem">Slide 7</div>
+				<div class="swiper-slide goodItem">Slide 7</div>
+				<div class="swiper-slide goodItem">Slide 7</div>
+				</div>
+				<div class="swiper-pagination swiper-pagination0"></div>
+				</div>
+				</div>
+		#goodsDesc.alertBox(onclick='fadeOut()')
+			.desBox
+				h5#title 周卡
+				p
+				.timeChange(display='none')
+		#shouQing.alertBox(onclick='soldOut()')
+			.desBox
+				h5#title 提示
+				p 该商品当前已售罄
+		#tipBox.alertBox(onclick='fadeOut()')
+			.tipBox
+				h5#title 提示
+				p
+		#successBox.alertBox
+			.successBox
+				img.closeBtn(onclick='fadeOut()', src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/closeBtn.png', alt='')
+				h4 签到成功!
+				img.erCode(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/erCode.jpg', alt='')
+				p 进入游戏中，在邮箱领取签到奖励
+		#buySuccessBox.alertBox
+			.successBox
+				img.closeBtn(onclick='fadeOut()', src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/closeBtn.png', alt='')
+				h4 购买成功!
+				img.erCode(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/erCode.jpg', alt='')
+				p 长按二维码进入游戏
+		#noUserBox.alertBox
+			.noUserBox
+				img.erCode(src='https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/erCode.jpg', alt='')
+				p
+					| 获取不到游戏账号
+					br
+					| 请长按二维码进入游戏后再来签到
+		input#signDays(type='hidden')
+		input#canSeePay(type='hidden')
+		script(src='https://downqn.tuyoo.com/offical_accounts/jquery-2.2.4.js')
+		script(src='https://downqn.tuyoo.com/offical_accounts/libs/adapter.release.js')
+		script(src='https://wx.tuyoo.com/script/winnie.js')
+		// <script src="https://downqn.tuyoo.com/offical_accounts/libs/tyh5_debug.js"></script>
+		script(src='https://downqn.tuyoo.com/offical_accounts/libs/tyh5_new_release.js')
+		script(src='https://downqn.tuyoo.com/offical_accounts/libs/swiper4.5.3/swiper.min.js')
+		script.
+			var judgeBuy;
+			//获取请求接口的时间
+			initWindow(window, 720)
+			pushHistory();
+			var bool = false;
+			setTimeout(function () {
+			bool = true;
+			}, 1500);
+			window.addEventListener("popstate", function (e) {
+			if (bool) {
+			WeixinJSBridge.call('closeWindow');
+			}
+			pushHistory();
+			}, false);
+			function pushHistory() {
+			var state = {
+			title: "title",
+			url: "#"
+			};
+			window.history.pushState(state, "title", "#");
+			}
+			//配置信息
+			var config = {
+			debug: false,
+			general: {
+			type: "wxwebpay.h5", //渠道标识(具体询问SDK部)
+			"baseurl": "http://open-hlsg.tytuyoo.com/", //SDK访问地址
+			// "baseurl": "https://sgfz.tuyoo.com/", //SDK访问地址
+			//"baseurl": "http://hlsgtest.nalrer.cn/", //SDK访问地址
+			"appId": 9999, //tuyoo appId
+			"gameId": "129", //tuyoo gameId
+			//"clientId": "H5_2.0_weixin.weixin.0-hall129.weixin.WXpay",
+			"clientId": "H5_2.0_weixin.weixin.0-hall129.weixin.hulaisg",
+			"cloudId": 59, //tuyoo cloudId
+			"bi_base_url": "https://cbi.touch4.me", //bi日志上报地址，sdk内部默认的是http，如果有需要可以添加此地址，替换sdk内部默认的http地址！
+			"wxAppId": "wx518c7987326cb63b", //小游戏
+			"wxGzhAppId": "wxc90a985e366592fe" //公众号
+			},
+			setShare: false, //是否分享
+			shareInfo: {
+			title: "",
+			desc: "",
+			link: "",
+			imgUrl: ""
+			}
+			}
+			var testUrl = config.general.baseurl;
+			//var testUrl = 'http://192.168.20.21:8000/';
+			var LoginData = {},
+			roleId = 0;
+			serverId = 0;
+			var SignCon = {
+			showList() {
+			$(".selectBox").hide();
+			$(".serverList").show();
+			},
+			getServerList: function () {
+			$.ajax({
+			url: testUrl + "v1/idlethree/wxchat?method=getServers&user_id=" + LoginData.userId,
+			type: "get",
+			data: null,
+			dataType: "json",
+			success: function (data) {
+			if (data.retcode == 1) {
+			if (data.data != null) {
+			var html1 = ''
+			var html2 = ''
+			var serverList = data.data.srvs;
+			var len = serverList.length;
+			serverList.forEach((element, index) => {
+			html1 += `<li onclick='SignCon.changeServer(` + JSON.stringify(element, testReplacer) +
+			`)' id="` +
+			element.roleId +
+			`" serverId="` + element.serverId + `">` + element.serverKey;
+			html2 += `<li onclick='PayCon.changeServer(` + JSON.stringify(element, testReplacer) +
+			`)' id="` +
+			element.roleId +
+			`" serverId="` + element.serverId + `">` + element.serverKey;
+			if (index == len - 1) {
+			html1 +=
+			`<img class="iconArr" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/icon_617.png" alt="">`
+			}
+			if (index == 0) {
+			html2 +=
+			`<img class="iconArr" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/icon_617.png" alt="">`
+			}
+			html1 += `</li>`;
+			html2 += `</li>`;
+			function testReplacer(key, value) { //key为对象属性名，value为对象属性值，会遍历testObj或testArr来执行该函数
+			if (key == "name") {
+			if (element.hasOwnProperty("name")) {
+			var translate = element["name"];
+			if (translate.search("''")) {
+			var str = new RegExp("'", "g")
+			value = translate.replace(str, '/');
+			}
+			} else {
+			value = value
+			}
+			}
+			return value;
+			}
+			});
+			$(".serverList").html(html1);
+			$("#RechargeMain .serverList").html(html2);
+			if (len == 1) {
+			$(".selectBox span").text(serverList[0].serverKey);
+			roleId = serverList[0].roleId
+			serverId = serverList[0].serverId
+			SignCon.initDom()
+			}
+			} else {
+			alert("数据有误");
+			}
+			} else {
+			alert(data.retmsg);
+			}
+			},
+			error: function (data) {
+			alert("网络错误！");
+			}
+			})
+			},
+			changeServer: function (nowUser) {
+			$(".nickName").text(nowUser.name);
+			$(".imgUrl").attr("src", nowUser.purl);
+			$(".uid").text("ID：" + nowUser.roleId)
+			$(".level").text("角色等级：" + nowUser.level)
+			$(".selectBox span").text(nowUser.serverKey);
+			$(".selectBox").show();
+			$(".serverList").hide();
+			roleId = nowUser.roleId
+			serverId = nowUser.serverId
+			SignCon.initDom()
+			},
+			//初始化dom
+			initDom: function () {
+			var param = (roleId == 0 ? LoginData.userId : roleId);
+			$(".nickName").text(LoginData.nickname);
+			$(".imgUrl").attr("src", LoginData.headimgurl);
+			const isIOS = (SignCon.getTerminal() == "ios" ? 1 : 0);
+			$.ajax({
+			url: testUrl + "v1/idlethree/wxchat?method=baseInit&user_id=" + LoginData.userId + "&isIOS=" + isIOS +
+			'&role_id=' + param,
+			type: "get",
+			data: null,
+			dataType: "json",
+			success: function (data) {
+			if (data.retcode == 1) {
+			if (data.data != null) {
+			SignCon.setList(data.data)
+			} else {
+			alert("数据有误");
+			}
+			} else {
+			alert(data.retmsg);
+			}
+			},
+			error: function (data) {
+			alert("网络错误！");
+			}
+			})
+			},
+			setList(data) {
+			var userInfo = data.userInfo,
+			prizeList = data.signRewards,
+			signStatus = data.todaySignStatus;
+			const canSeePay = data.canSeePay;
+			const signDays = data.signDays;
+			$("#signDays").val(signDays);
+			$("#canSeePay").val(canSeePay);
+			$(".nickName").text("昵称：" + userInfo.name)
+			$(".uid").text("ID：" + userInfo.userId)
+			$(".level").text("角色等级：" + userInfo.level)
+			var html = ''
+			const arr = ["第一天", '第二天', '第三天', '第四天', '第五天', '第六天', '累计签到7天加赠额外奖励'];
+			prizeList.forEach((element, index) => {
+			html += `<li onclick="SignCon.signFn(this,0)" class="`;
+			if (element.date) {
+			html += `active`;
+			}
+			if (element.index == '7') {
+			html += `">
+			<img class="prizeImg prizeImg71" src="` + element.pic[0] +
+			`"><img class="prizeImg prizeImg72" src="` + element.pic[1] +
+			`">`;
+			} else {
+			html += `">
+			<img class="prizeImg" src="` + element.pic +
+			`">`;
+			}
+			html += `
+			<img class="geted" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/geted_617.png" alt="">
+			<p class="date">`;
+			if (element.date) {
+			html += parseTime(element.date, '{y}-{m}-{d}')
+			}
+			html += `</p>
+			<p class="mask"></p>
+			<p class="title">` + arr[index] +
+			`</p>
+			</li>`;
+			});
+			$(".prizeList").html(html);
+			// 只要可视充值按钮直接显示
+			if (canSeePay == 1) {
+			$("#resignBtn").hide();
+			$("#rechargeBtn").show();
+			} else {
+			$("#resignBtn").show();
+			$("#rechargeBtn").hide();
+			}
+			if (signStatus == 0) {
+			$(".prizeList li").eq(signDays).addClass('canGet');
+			if (canSeePay == 0) {
+			$("#resignBtn").addClass("canGet").show();
+			}
+			} else {
+			$("#resignBtn").hide();
+			}
+			},
+			//签到
+			signFn: function (obj, flag) {
+			if (roleId == 0) {
+			$("#tipBox p").text("请主公先选择服务器~");
+			$(".alertBox").hide();
+			$("#tipBox").show();
+			return;
+			}
+			if ($(obj).hasClass("active")) { //奖励已经领取用户点击了的提示
+			$("#tipBox p").text("奖励已领取，记得去邮箱查看哟~");
+			$(".alertBox").hide();
+			$("#tipBox").show();
+			return;
+			}
+			if (!$(obj).hasClass("canGet")) { //点击不可领
+			$("#tipBox p").text("还未到达新的一天，请主公明天再来~");
+			$(".alertBox").hide();
+			$("#tipBox").show();
+			return;
+			}
+			if (flag == 1) { //签到按钮来的
+			var index = $("#signDays").val() - 0 + 1;
+			} else { //点击商品信息
+			var index = $(".prizeList li").index(obj) + 1;
+			}
+			if (LoginData == null || LoginData == '') {
+			alert("登录信息有误！请刷新页面重试！");
+			return;
+			}
+			$.ajax({
+			url: testUrl + "v1/idlethree/wxchat?method=sign&user_id=" + LoginData.userId + "&index=" + index +
+			'&role_id=' + roleId,
+			type: "get",
+			success: function (data) {
+			if (data.retcode == 1) { //成功加效果
+			const signDays = data.data.signDays;
+			$("#signDays").val(signDays);
+			$(".prizeList li").eq(signDays - 1).removeClass('canGet').addClass('active').find(".date").text(
+			parseTime(new Date(), '{y}-{m}-{d}'));
+			$("#resignBtn").removeClass("canGet").hide();
+			if ($("#canSeePay").val() == 1) {
+			$("#rechargeBtn").show();
+			}
+			//签到成功二维码
+			$(".alertBox").hide();
+			$("#successBox").show();
+			} else {
+			alert(data.retmsg);
+			}
+			},
+			error: function (data) {
+			alert("网络错误！");
+			}
+			});
+			},
+			PayUI: function () {
+			$("#SignMain").slideUp();
+			PayCon.initDom();
+			$("#RechargeMain").show();
+			},
+			getTerminal: function () {
+			if (!window.nurse) {
+			window.nurse = new Object;
+			}
+			var u = navigator.userAgent,
+			app = navigator.appVersion;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+			var isiOS = !!u.match(/\\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+			if (isiOS) {
+			return "ios";
+			} else if (isAndroid) {
+			return "android";
+			} else {
+			return;
+			}
+			}
+			}
+			//登陆
+			TuyooH5.OnInit(config, function (code, loginData, msg) {
+			if (code === 0) {
+			// console.log("-----loginData是-------", loginData);
+			LoginData = loginData;
+			SignCon.getServerList();
+			SignCon.initDom();
+			} else if (code == 3) { //未查询到userId
+			$(".alertBox").hide();
+			$("#noUserBox").show();
+			} else {
+			alert("登录失败：" + msg);
+			}
+			});
+			//弹窗
+			function fadeOut(flag) {
+			$(".alertBox").fadeOut();
+			}
+			function soldOut() {
+			$(".alertBox").fadeOut();
+			$("#shouQing").show();
+			}
+			function parseTime(time, cFormat) {
+			if (arguments.length === 0) {
+			return null
+			}
+			const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+			let date
+			if (typeof time === 'object') {
+			date = time
+			} else {
+			if (('' + time).length === 10) time = parseInt(time) * 1000
+			date = new Date(time)
+			}
+			const formatObj = {
+			y: date.getFullYear(),
+			m: date.getMonth() + 1,
+			d: date.getDate(),
+			h: date.getHours(),
+			i: date.getMinutes(),
+			s: date.getSeconds(),
+			a: date.getDay()
+			}
+			const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+			let value = formatObj[key]
+			// Note: getDay() returns 0 on Sunday
+			if (key === 'a') {
+			return ['日', '一', '二', '三', '四', '五', '六'][value]
+			}
+			if (result.length > 0 && value < 10) {
+			value = value
+			}
+			return value || 0
+			})
+			return time_str
+			}
+		script.
+			var flag;
+			var getTimeStamp;
+			var calTime;
+			var PayCon = {
+			SwiperArr: [],
+			canPay: true,
+			hasClicked: false,
+			changeServer: function (nowUser) {
+			$(".nickName").text(nowUser.name);
+			$(".imgUrl").attr("src", nowUser.purl);
+			$(".uid").text("ID：" + nowUser.roleId)
+			$(".level").text("角色等级：" + nowUser.level)
+			$(".selectBox span").text(nowUser.serverKey);
+			$(".selectBox").show();
+			$(".serverList").hide();
+			roleId = nowUser.roleId
+			serverId = nowUser.serverId
+			PayCon.initDom()
+			},
+			payGoods: function (prodId, prodName, prodPrice) {
+			if (!PayCon.canPay) {
+			$("#tipBox p").text("请先验证账号~");
+			$(".alertBox").hide();
+			$("#tipBox").show();
+			PayCon.hasClicked = false;
+			return;
+			}
+			TuyooH5.PayGoods({
+			appInfo: 'roleId:' + roleId,
+			prodId: prodId, //商品Id
+			prodName: prodName, //商品名称
+			prodPrice: prodPrice, //商品价格,
+			game_area: serverId
+			}, function (status, data, msg) {
+			PayCon.hasClicked = false;
+			// console.log("支付结果:", status, data, msg);
+			if (status != 0) {
+			alert(msg);
+			return false;
+			}
+			$(".alertBox").hide();
+			$("#buySuccessBox").show();
+			PayCon.initDom();
+			}, this);
+			},
+			initDom: function () {
+			// console.log('-----------N:',roleId)
+			var param = (roleId == 0 ? LoginData.userId : roleId);
+			$.get(testUrl + 'v1/idlethree/wxchat?method=getGoods&user_id=' + LoginData.userId + '&role_id=' + param,
+			null,
+			function (data) {
+			//获取请求接口时的时间
+			getTimeStamp = (new Date()).getTime();
+			if (data.retcode != 1) {
+			alert(data.retmsg);
+			return;
+			}
+			const list = data.data;
+			const num = data.data;
+			var swiperList = [];
+			var html = '';
+			var leftTimeList = [];
+			var realTime;
+			list.forEach((val, ind) => {
+			html += `<div class="goodBox">
+			<h5 class="title" id="my" name="` + val.name +
+			`">` + val.name + `</h5>
+			<div class="swiper-container list list` + ind +
+			`">
+			<div class="swiper-wrapper">`;
+			if (val.products.length > 0) {
+			swiperList[ind] = val.products.length
+			val.products.forEach((element, index) => {
+			let styleClass = ''
+			html += `<div class="swiper-slide goodItem"  id="` + element.id + `" name="` + element
+			.name +
+			`" desc="` + element.desc + `" time="` + element.proExpireTs + `" >`;
+			if (element.cornerMarker || element.cornerMarker == 0) {
+			html += `<p class="iconLeft cornerMarker` + element.cornerMarker +
+			`">
+			<img class="imgIcon" src="https://downqn.tuyoo.com/offical_accounts/sanFang/hlsg/` +
+			element.cornerMarker + `.png" alt="">
+			</p>`;
+			styleClass = 'showRight'
+			}
+			html += `
+			<h5 class="name ` + styleClass + `">` + element.name +
+			`</h5>
+			<img class="goodsImg" src="` + element.pic +
+			`" alt="">`;
+			if (element.buyLimitDesc) {
+			var text = element.buyLimitDesc
+			} else {
+			text = '限购'
+			}
+			if (element.limitBuyCount != null && element.limitBuyCount != 0) {
+			if (element.curBuyCount == undefined) {
+			judgeBuy = element.limitBuyCount;
+			} else {
+			judgeBuy = element.limitBuyCount - element.curBuyCount;
+			}
+			html += `<p class="limitGoods active" des="` + element.limitBuyCount + `" dev="` +
+			judgeBuy + `">` + text + judgeBuy +
+			`/` + element.limitBuyCount + `</p>`;
+			}
+			html += `<button class="buttonGoods" onclick="PayCon.buyIt('` + val.name + `',' ` +
+			judgeBuy + `',' ` + element.id + `','` +
+			element.name + `','` + element.price + `','` + element.proExpireTs + `')"> ¥ ` +
+			element.price +
+			`</button>
+			</div>`;
+			});
+			}
+			html +=
+			`
+			</div>
+			<div class="swiper-pagination swiper-pagination` +
+			ind +
+			`"></div>
+			<p class="tips">·点击商品查看详情</p>
+			</div>
+			</div>`
+			})
+			$(".list").html(html);
+			PayCon.initSwiper(swiperList)
+			}, 'json')
+			},
+			initSwiper: function (swiperList) {
+			var loopflag;
+			var len = swiperList.length;
+			for (let i = 0; i < len; i++) {
+			if (swiperList[i] <= 3) {
+			loopflag = false;
+			} else {
+			loopflag = true;
+			}
+			PayCon.SwiperArr[i] = new Swiper('.list' + i, {
+			loop: loopflag,
+			slidesPerView: "3",
+			loopedSlides: 3,
+			spaceBetween: '0.7%',
+			slidesPerGroup: 3,
+			loopFillGroupWithBlank: true,
+			observer: true, //修改swiper自己或子元素时，自动初始化swiper
+			observeParents: true, //修改swiper的父元素时，自动初始化swiper
+			pagination: {
+			el: '.swiper-pagination' + i,
+			clickable: true,
+			}
+			});
+			}
+			},
+			buyIt: function (title, dev, id, name, price, btnTime, ev) {
+			var buyClicktimestamp = (new Date()).getTime();
+			var oEvent = ev || event;
+			oEvent.cancelBubble = true;
+			oEvent.stopPropagation();
+			if (roleId == 0) {
+			$("#tipBox p").text("请主公先选择服务器～");
+			$(".alertBox").hide();
+			$("#tipBox").show();
+			return;
+			}
+			if (title == "限时商城") {
+			if (btnTime != "" && btnTime != undefined && btnTime != null) {
+			calTime = btnTime * 1000 - buyClicktimestamp;
+			if (!PayCon.hasClicked && dev != 0 && calTime > 0) {
+			PayCon.hasClicked = true;
+			PayCon.payGoods(id, name, price);
+			} else if (!PayCon.hasClicked && dev == 0) {
+			soldOut();
+			}
+			}
+			} else {
+			if (!PayCon.hasClicked && dev != 0) {
+			PayCon.hasClicked = true;
+			PayCon.payGoods(id, name, price);
+			} else if (!PayCon.hasClicked && dev == 0) {
+			soldOut();
+			}
+			}
+			},
+			showDesc: function (name, desc) {
+			$("#goodsDesc").find("#title").text(name);
+			var text = desc.replace(/[\\n\r]/g, '<br/>');
+			$("#goodsDesc").find("p").html(text);
+			$("#goodsDesc").show();
+			},
+			}
+			//倒计时时间
+			function checkTime(i) { //将0-9的数字前面加上0，例1变为01
+			if (i < 10) {
+			i = "0" + i;
+			}
+			return i;
+			}
+			var timer = 0;
+			function leftTimer(leftTime) {
+			clearTimeout(timer);
+			~ function coutTime() {
+			leftTime = leftTime - 1000;
+			if (leftTime <= 0) {
+			leftTime = 0
+			$(".timeChange").text("限时购买  " + "00:00");
+			return;
+			} else {
+			var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数
+			var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时
+			var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟
+			var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数
+			hours = checkTime(hours);
+			minutes = checkTime(minutes);
+			seconds = checkTime(seconds);
+			timer = setTimeout(() => {
+			coutTime();
+			}, 1000);
+			$(".timeChange").text("限时购买  " + days + "天  " + hours + ":" + minutes + ":" + seconds);
+			}
+			}();
+			}
+			$(".alertBox div").click(function (ev) {
+			var oEvent = ev || event;
+			oEvent.cancelBubble = true;
+			oEvent.stopPropagation();
+			})
+			var judgeTime;
+			var leftTime;
+			$("body").on('click', '.goodItem', function () {
+			var giveTime = $(this).attr("time"); //后端传过来的时间戳
+			var clicktimestamp = (new Date()).getTime();
+			var wasteTime = clicktimestamp - getTimeStamp;
+			leftTime = giveTime * 1000 - wasteTime - getTimeStamp; //传过来的时间戳减去浪费时间是真正的倒计时开始的时间
+			var judgeTime = $(this).parents('.goodBox').find('#my').html()
+			var name = $(this).attr("name");
+			var desc = $(this).attr('desc');
+			if (judgeTime == '限时商城' && leftTime > 0) {
+			leftTimer(leftTime);
+			$(".timeChange").show();
+			} else {
+			clearTimeout(timer)
+			$(".timeChange").hide();
+			}
+			PayCon.showDesc(name, desc);
+			})

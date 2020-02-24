@@ -60,6 +60,22 @@ router.get('/wechat/hello', getSignPackage, function(req, res, next) {
 	})
 });
 
+router.get('/wechat/sign_in', getSignPackage, function(req, res, next) {
+	res.render('sgin',{
+		title: 'RedWar Pay',
+		signPackage: req.signPackage,
+		pretty: true
+	})
+});
+
+router.get('/mall', getSignPackage, function(req, res, next) {
+	res.render('mall',{
+		title: 'RedWar Pay',
+		signPackage: req.signPackage,
+		pretty: true
+	})
+});
+
 // auth
 // devrtommy.nat100.top
 // wx4b871d03442ff7d4

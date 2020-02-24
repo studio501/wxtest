@@ -1,0 +1,23 @@
+extends sign_layout
+
+block content
+	script(src='https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js')
+	canvas#gameCanvas(width='320',height='800')
+	
+
+	script(type='text/javascript', src='./javascripts/cocos2d-js-v3.13-lite.js', charset='UTF-8')
+	
+	script(type='text/javascript', src='javascripts/game.js', charset='UTF-8')
+
+	script.
+		var tw = document.body.clientWidth;
+		var th = document.body.clientHeight;
+		console.log('tw here is',tw);
+		console.log('th here is',th);
+		console.log($('#gameCanvas'))
+		//- $('#gameCanvas')[0].width = tw
+		//- $('#gameCanvas')[0].height = th
+		//- $('#gameCanvas')[0].clientWidth = tw
+		//- $('#gameCanvas')[0].clientHeight = th
+
+	

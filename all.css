@@ -1,0 +1,45 @@
+img#img1 {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	height: 26px;
+	width: -webkit-fill-available;
+}
+
+img#selbg {
+	position: absolute;
+	left: 23px;
+	top: 2px;
+	height: 20px;
+	width: 88px;
+}
+
+img#tribg {
+	position: absolute;
+	left: 91px;
+	top: 2px;
+	width: 20px;
+	height: 20px;
+}
+
+img#infobg {
+	position: absolute;
+	left: 117px;
+	top: 2px;
+	width: 166px;
+	height: 20px;
+}
+
+p#servertxt {
+	position: absolute;
+	left: 25px;
+	top: -5px;
+	font-size: 11px;
+}
+
+p#infotxt {
+	position: absolute;
+	left: 121px;
+	top: -4px;
+	font-size: 10px;
+}
