@@ -3,7 +3,5 @@
     "frameRate"     : 60,
     "id"            : "gameCanvas",
     "renderMode"    : 1,
-    // "width"         : 320,
-    // "height"        : 504,
     "jsList"        : []
 }
