@@ -1,13 +1,10 @@
 extends sign_layout
 
 block content
-
-	canvas#gameCanvas(width='320',height='800')
-
-	script(type='text/javascript', src='./javascripts/cocos2d-js-v3.13-lite.js', charset='UTF-8')
 	script(src='https://cdn.bootcss.com/zepto/1.0rc1/zepto.min.js')
-	script(type='text/javascript', src='javascripts/game.js', charset='UTF-8')
-
+	
+	canvas#gameCanvas(width='320',height='800')
+	
 	script.
 		var tw = document.body.clientWidth;
 		var th = document.body.clientHeight;
@@ -17,5 +14,18 @@ block content
 		//- $('#gameCanvas')[0].height = th
 		//- $('#gameCanvas')[0].clientWidth = tw
 		//- $('#gameCanvas')[0].clientHeight = th
+
+		window.m_testdata = 123
+
+	script(type='text/javascript', src='javascripts/cocos2d-js-v3.13-lite.js', charset='UTF-8')
+	script(type='text/javascript', src='javascripts/ResCfg.js', charset='UTF-8')
+	script(type='text/javascript', src='javascripts/cus_event.js', charset='UTF-8')
+	script(type='text/javascript', src='javascripts/utils.js', charset='UTF-8')
+	script(type='text/javascript', src='javascripts/GameMgr.js', charset='UTF-8')
+	script(type='text/javascript', src='javascripts/ClickSprite.js', charset='UTF-8')
+	script(type='text/javascript', src='javascripts/GameLayer.js', charset='UTF-8')
+	script(type='text/javascript', src='javascripts/game.js', charset='UTF-8')
+
+	
 
 	
